@@ -26,13 +26,17 @@ protected:
 
     Gtk::Entry * const m_dxEntry;     // Translation in x
     Gtk::Entry * const m_dyEntry;     // Translation in y
+    Gtk::Entry * const m_dzEntry;     // Translation in z
     Gtk::Entry * const m_sxEntry;     // Scalilng in x
     Gtk::Entry * const m_syEntry;     // Scalilng in y
+    Gtk::Entry * const m_szEntry;     // Scalilng in z
     Gtk::Entry * const m_xEntry;      // Reference point x-coord for rotation
     Gtk::Entry * const m_yEntry;      // Reference point x-coord for rotation
+    Gtk::Entry * const m_zEntry;      // Reference point x-coord for rotation
     Gtk::Entry * const m_angleEntry;  // Angle of rotation about the Z axis
     Gtk::Label * const m_xLabel;      // X-coord label for rotation
     Gtk::Label * const m_yLabel;      // Y-coord label for rotation
+    Gtk::Label * const m_zLabel;      // Z-coord label for rotation
 
     bool m_origin_rbutton;
     bool m_point_rbutton;
@@ -40,11 +44,14 @@ protected:
 
     double m_dx;     // Translation in x
     double m_dy;     // Translation in y
+    double m_dz;     // Translation in z
     double m_sx;     // Scaling in x
     double m_sy;     // Scaling in y
+    double m_sz;     // Scaling in z
     double m_angle;  // Rotation angle
     double m_refX;   // Reference point x-coord
     double m_refY;   // Reference point y-coord
+    double m_refZ;   // Reference point z-coord
 
     bool transform();
     bool translate();
@@ -66,10 +73,13 @@ public:
     // Getters
     double get_dx() const {return m_dx;}
     double get_dy() const {return m_dy;}
+    double get_dz() const {return m_dz;}
     double get_sx() const {return m_sx;}
     double get_sy() const {return m_sy;}
+    double get_sz() const {return m_sz;}
     double get_refX() const {return m_refX;}
     double get_refY() const {return m_refY;}
+    double get_refZ() const {return m_refZ;}
     double get_angle() const {return m_angle;}
     std::string get_selected_object() const;
 };

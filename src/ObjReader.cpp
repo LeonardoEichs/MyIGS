@@ -22,7 +22,7 @@
 ObjReader::ObjReader() : m_vCount(0)
 /* ============================================================================================= */
 {
-    
+
 }
 
 /* ============================================================================================= */
@@ -81,5 +81,5 @@ Point* ObjReader::new_point(int idx) const
     // Creates a new point. The index refers to the Coord<double> element in m_coords.
     // Also sets the corresponding m_points[idx] value to bool false.
     // TODO
-    return new Point("", 10, 10);  // to be changed
+    // return new Point("", 10, 10);  // to be changed
 }

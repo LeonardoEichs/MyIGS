@@ -17,8 +17,10 @@ protected:
     std::vector<Gtk::Entry*> m_entries;
     double m_x2;
     double m_y2;
+    double m_z2;
     double m_x3;
     double m_y3;
+    double m_z3;
 
 public:
     CoordBox() {}

@@ -39,7 +39,7 @@ private:
     const int HEIGHT = 500;
     const int OFFSET = 10;
 
-    // Vierport coordinates
+    // Viewrport coordinates
     const int VP_WIDTH = WIDTH - 2 * OFFSET;
     const int VP_HEIGHT = HEIGHT - 2 * OFFSET;
     const int VP_XMIN = OFFSET;

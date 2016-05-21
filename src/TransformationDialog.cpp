@@ -17,13 +17,17 @@ TransformationDialog::TransformationDialog(const Glib::ustring &title,
     m_notebook(Gtk::manage(new Gtk::Notebook())),
     m_dxEntry(Gtk::manage(new Gtk::Entry())),
     m_dyEntry(Gtk::manage(new Gtk::Entry())),
+    m_dzEntry(Gtk::manage(new Gtk::Entry())),
     m_sxEntry(Gtk::manage(new Gtk::Entry())),
     m_syEntry(Gtk::manage(new Gtk::Entry())),
+    m_szEntry(Gtk::manage(new Gtk::Entry())),
     m_xEntry(Gtk::manage(new Gtk::Entry())),
     m_yEntry(Gtk::manage(new Gtk::Entry())),
+    m_zEntry(Gtk::manage(new Gtk::Entry())),
     m_angleEntry(Gtk::manage(new Gtk::Entry())),
     m_xLabel(Gtk::manage(new Gtk::Label("x:"))),
     m_yLabel(Gtk::manage(new Gtk::Label("y:"))),
+    m_zLabel(Gtk::manage(new Gtk::Label("z:"))),
     m_origin_rbutton(true),
     m_point_rbutton(false),
     m_centroid_rbutton(false)
@@ -171,7 +175,7 @@ bool TransformationDialog::translate() {
     // Get input data from dialog box entries
     str_dx << m_dxEntry->get_text().raw();
     str_dy << m_dyEntry->get_text().raw();
-    
+
     /* Check for empty entries */
     if (str_dx.str().size() != 0 && str_dy.str().size() != 0) {
         str_dx >> m_dx;
@@ -190,7 +194,7 @@ bool TransformationDialog::scale() {
     // Get input data from dialog box entries
     str_sx << m_sxEntry->get_text().raw();
     str_sy << m_syEntry->get_text().raw();
-    
+
     /* Check for empty entries */
     if (str_sx.str().size() != 0 && str_sy.str().size() != 0) {
         str_sx >> m_sx;
@@ -290,7 +294,7 @@ void TransformationDialog::show_reference_point() {
     m_yEntry->show();
     m_xLabel->show();
     m_yLabel->show();
-    
+
 }
 
 

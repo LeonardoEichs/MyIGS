@@ -10,20 +10,24 @@
 
 class Point : public Shape {
 private:
-    double m_xwc;  // Window coordinate
-    double m_ywc;  // Window coordinate
-    double m_xnc;  // Normalized coordinate
-    double m_ync;  // Normalized coordinate
+    double m_xwc; // Window coordinate
+    double m_ywc; // Window coordinate
+    double m_zwc; // Window coordinate
+    double m_xnc; // Normalized coordinate
+    double m_ync; // Normalized coordinate
+    double m_znc; // Normalized coordinate
 
 public:
-    Point(const std::string name, const double x, const double y);
+    Point(const std::string name, const double x, const double y, const double z);
     ~Point();
 
     // Getters
-    double xwc() const { return m_xwc; }
-    double ywc() const { return m_ywc; }
-    double xnc() const { return m_xnc; }
-    double ync() const { return m_ync; }
+    double xwc() const {  return m_xwc; }
+    double ywc() const {  return m_ywc; }
+    double zwc() const {  return m_zwc; }
+    double xnc() const {  return m_xnc; }
+    double ync() const {  return m_ync; }
+    double znc() const {  return m_znc; }
     const Coord<double> get_centroid() override;
 
     // Visitors
@@ -37,6 +41,7 @@ public:
     // Operator overloading
     bool operator==(const Point &rhs) const;
     bool operator!=(const Point &rhs) const;
+
 };
 
-#endif  // POINT_HPP
+#endif // POINT_HPP

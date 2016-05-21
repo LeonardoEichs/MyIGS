@@ -49,6 +49,7 @@ void Canvas::draw_theme(const CairoCtx &cr) {
 
 
 void Canvas::draw_viewport(const CairoCtx &cr) {
+    // Draw the square that indicates the viewport
     // Top horizontal line
     cr->move_to(VP_XMIN, VP_YMIN);
     cr->line_to(VP_XMAX, VP_YMIN);

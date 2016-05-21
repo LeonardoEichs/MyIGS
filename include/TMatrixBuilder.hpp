@@ -25,11 +25,11 @@ private:
 
 public:
     static TMatrixBuilder* instance();
-    void translation_matrix(TMatrix &m, double dx, double dy);
-    void scaling_matrix(TMatrix &m, double sx, double sy, double x, double y);
-    void rotation_matrix(TMatrix &m, double angleZ, double x, double y);
-    void normalizing_matrix(TMatrix &m, double dx, double dy, double sx,
-            double sy, double angle);
+    void translation_matrix(TMatrix &m, double dx, double dy, double dz);
+    void scaling_matrix(TMatrix &m, double sx, double sy, double sz, double x, double y, double z);
+    void rotation_matrix(TMatrix &m, double angleZ, double x, double y, double z);
+    void normalizing_matrix(TMatrix &m, double dx, double dy, double dz,
+      double sx, double sy, double sz, double angle);
 };
 
 #endif  // TMATRIX_BUILDER_HPP

@@ -52,6 +52,7 @@ public:
     void to_viewport(Shape *shape);
     int xnc_to_xvp(const double xWindow);
     int ync_to_yvp(const double yWindow);
+    int znc_to_zvp(const double yWindow);
 
     // Window transformations
     void move_window(int rightOrLeft, int upOrDown);

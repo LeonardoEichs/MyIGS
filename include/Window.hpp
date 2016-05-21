@@ -18,11 +18,13 @@ private:
     const double DEFAULT_HEIGHT = 480;
     const double DEFAULT_CENTER_X = 0.0;
     const double DEFAULT_CENTER_Y = 0.0;
+    const double DEFAULT_CENTER_Z = 0.0;
     const double DEFAULT_DISPLACEMENT = 5.0;
     const double DEFAULT_ZOOM = 0.25;
 
     double m_xc;
     double m_yc;
+    double m_zc;
     double m_width;   // Width in WC
     double m_height;  // Height in WC
     double m_angle;   // Angle to Ywc
@@ -34,6 +36,7 @@ public:
     // Getters
     const double x_center() const { return m_xc; }
     const double y_center() const { return m_yc; }
+    const double z_center() const { return m_zc; }
     const double width() const { return m_width; }
     const double height() const { return m_height; }
     const double angle() const { return m_angle; }

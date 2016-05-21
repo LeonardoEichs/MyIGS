@@ -36,15 +36,18 @@ void Wireframe::add_point(Point *point) {
 const Coord<double> Wireframe::get_centroid() {
     double x = 0.0;
     double y = 0.0;
+    double z = 0.0;
     auto p = m_vertices.begin();
     while (p != m_vertices.end()) {
         x += (*p)->xwc();
         y += (*p)->ywc();
+        z += (*p)->zwc();
         p++;
     }
     x = x / (double) m_vertices.size();
     y = y / (double) m_vertices.size();
-    return Coord<double>(x, y);
+    z = z / (double) m_vertices.size();
+    return Coord<double>(x, y, z);
 }
 
 
@@ -68,7 +71,7 @@ void Wireframe::normalize(TMatrix &matrix) {
     auto p = m_vertices.begin();
     while (p != m_vertices.end()) {
         (*p)->normalize(matrix);
-        m_ncCoord.push_back(new Coord<double>((*p)->xnc(), (*p)->ync()));
+        m_ncCoord.push_back(new Coord<double>((*p)->xnc(), (*p)->ync(), (*p)->znc()));
         p++;
     }
 }

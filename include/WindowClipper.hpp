@@ -1,8 +1,8 @@
 // WindowClipper.hpp
 // Authors: Leonardo Vailatti
 //          Makhles R. Lange
-// 
-// Clips shapes expressed in normalized coordinates to a 
+//
+// Clips shapes expressed in normalized coordinates to a
 // window whose coordinates are given by the NCS.
 
 
@@ -60,6 +60,8 @@ private:
     const double X_MAX = +1.0;
     const double Y_MIN = -1.0;
     const double Y_MAX = +1.0;
+    const double Z_MIN = -1.0;
+    const double Z_MAX = +1.0;
 
     // Used on Cohen-Sutherland
     const int INSIDE = 0;

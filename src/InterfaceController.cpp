@@ -104,7 +104,7 @@ void InterfaceController::update_gtm()
     DEBUG_MSG("angle: " << angle);
 
     // Global Transformation Matrix
-    TMatrixBuilder::instance()->normalizing_matrix(m_gtm, dx, dy, sx, sy, angle);
+    TMatrixBuilder::instance()->normalizing_matrix(m_gtm, dx, dy, 0.0, sx, sy, 0.0, angle);
 
     DEBUG_MSG("------------------------------");
     DEBUG_MSG("GTM:");
@@ -176,7 +176,7 @@ void InterfaceController::to_viewport(Shape *shape)
             yvp = (int) (yvp_max - yratio * (ync + 1.0));
 
             // Update shape
-            shape->add_viewport_coordinate(new Coord<int>(xvp, yvp));
+            shape->add_viewport_coordinate(new Coord<int>(xvp, yvp, 0.0));
             c++;
 
             DEBUG_MSG("xvp = " << xvp);
@@ -233,10 +233,11 @@ void InterfaceController::translate(const TransformationDialog &dialog)
 {
     double dx = dialog.get_dx();
     double dy = dialog.get_dy();
+    double dz = dialog.get_dz();
     std::string obj_name = dialog.get_selected_object();
     Shape *shape = this->find_shape(obj_name);
     if (shape) {
-        TMatrixBuilder::instance()->translation_matrix(m_gtm, dx, dy);
+        TMatrixBuilder::instance()->translation_matrix(m_gtm, dx, dy, dz);
         shape->transform(m_gtm);
         this->update(shape);
     } else {
@@ -250,11 +251,12 @@ void InterfaceController::scale(const TransformationDialog &dialog)
 {
     double sx = dialog.get_sx();
     double sy = dialog.get_sy();
+    double sz = dialog.get_sz();
     std::string obj_name = dialog.get_selected_object();
     Shape *shape = this->find_shape(obj_name);
     if (shape) {
         const Coord<double> c = shape->get_centroid();
-        TMatrixBuilder::instance()->scaling_matrix(m_gtm, sx, sy, c.x(), c.y());
+        TMatrixBuilder::instance()->scaling_matrix(m_gtm, sx, sy, sz,c.x(), c.y(), c.z());
         shape->transform(m_gtm);
         this->update(shape);
     } else {
@@ -270,10 +272,11 @@ void InterfaceController::rotate(const TransformationDialog &dialog)
     double angle = dialog.get_angle();
     double x = dialog.get_refX();
     double y = dialog.get_refY();
+    double z = dialog.get_refZ();
     std::string obj_name = dialog.get_selected_object();
     Shape *shape = this->find_shape(obj_name);
     if (shape) {
-        TMatrixBuilder::instance()->rotation_matrix(m_gtm, angle, x, y);
+        TMatrixBuilder::instance()->rotation_matrix(m_gtm, angle, x, y, z);
         shape->transform(m_gtm);
         this->update(shape);
     } else {
@@ -290,7 +293,7 @@ void InterfaceController::rotate_about_centroid(const TransformationDialog &dial
     Shape *shape = this->find_shape(obj_name);
     if (shape) {
         const Coord<double> c = shape->get_centroid();
-        TMatrixBuilder::instance()->rotation_matrix(m_gtm, angle, c.x(), c.y());
+        TMatrixBuilder::instance()->rotation_matrix(m_gtm, angle, c.x(), c.y(), c.z());
         shape->transform(m_gtm);
         this->update(shape);
     } else {
@@ -347,4 +350,3 @@ void InterfaceController::set_polygon_clipping_method(PolygonClipping type)
 {
     m_clipper->set_polygon_clipping_method(type);
 }
-

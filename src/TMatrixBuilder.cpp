@@ -21,35 +21,49 @@ TMatrixBuilder* TMatrixBuilder::instance() {
 }
 
 
-void TMatrixBuilder::translation_matrix(TMatrix &m, double dx, double dy) {
+void TMatrixBuilder::translation_matrix(TMatrix &m, double dx, double dy, double dz) {
     // Foley (p. 205)
     m(0,0) = 1.0;
     m(0,1) = 0.0;
-    m(0,2) = dx;
+    m(0,2) = 0.0;
+    m(0,3) = dx;
     m(1,0) = 0.0;
     m(1,1) = 1.0;
-    m(1,2) = dy;
+    m(1,2) = 0.0;
+    m(1,3) = dy;
     m(2,0) = 0.0;
     m(2,1) = 0.0;
     m(2,2) = 1.0;
+    m(2,3) = dz;
+    m(3,0) = 0.0;
+    m(3,1) = 0.0;
+    m(3,2) = 0.0;
+    m(3,3) = 1.0;
 }
 
 
-void TMatrixBuilder::scaling_matrix(TMatrix &m, double sx, double sy, double x, double y) {
+void TMatrixBuilder::scaling_matrix(TMatrix &m, double sx, double sy, double sz, double x, double y, double z) {
     // Foley (p. 209)
     m(0,0) = sx;
     m(0,1) = 0.0;
-    m(0,2) = x * (1 - sx);
+    m(0,2) = 0.0;
+    m(0,3) = x * (1 - sx);
     m(1,0) = 0.0;
     m(1,1) = sy;
-    m(1,2) = y * (1 - sy);
+    m(1,2) = 0.0;
+    m(1,3) = y * (1 - sy);
     m(2,0) = 0.0;
     m(2,1) = 0.0;
-    m(2,2) = 1.0;
+    m(2,2) = sz;
+    m(2,3) = z * (1 - sz);
+    m(3,0) = 0.0;
+    m(3,1) = 0.0;
+    m(3,2) = 0.0;
+    m(3,3) = 1.0;
 }
 
 
-void TMatrixBuilder::rotation_matrix(TMatrix &m, double angle, double x, double y) {
+void TMatrixBuilder::rotation_matrix(TMatrix &m, double angle, double x, double y, double z) {
     double radians = angle * PI / 180.0;
     double cos_angle = cos (radians);
     double sin_angle = sin (radians);
@@ -67,8 +81,8 @@ void TMatrixBuilder::rotation_matrix(TMatrix &m, double angle, double x, double 
 }
 
 
-void TMatrixBuilder::normalizing_matrix(TMatrix &m, double dx, double dy, double sx,
-            double sy, double angle) {
+void TMatrixBuilder::normalizing_matrix(TMatrix &m, double dx, double dy, double dz,
+                                          double sx, double sy, double sz, double angle) {
 
     double radians = angle * PI / 180.0;
     double cos_angle = cos (radians);

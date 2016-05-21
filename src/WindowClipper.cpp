@@ -24,7 +24,7 @@ WindowClipper::WindowClipper() :
 /* ============================================================================================= */
     m_lineClipping(LineClipping::CS),
     m_polygonClipping(PolygonClipping::SH)
-{   
+{
 }
 
 /* ============================================================================================= */
@@ -33,11 +33,12 @@ void WindowClipper::clip_to_area(Point &p)
 {
     double x = p.xnc();
     double y = p.ync();
+    double z = p.znc();
     DCoordVector newVertice;
 
     if (x >= X_MIN && x <= X_MAX && y >= Y_MIN && y <= Y_MAX) {
         DEBUG_MSG("Clipped point inside (" << x << "," << y << ")");
-        newVertice.push_back(new Coord<double>(x, y));
+        newVertice.push_back(new Coord<double>(x, y, z));
     } else {
         DEBUG_MSG("Point outside.");
     }
@@ -218,7 +219,7 @@ void WindowClipper::clip_bspline(const DCoordVector &inVertices, DCoordVector &o
     DEBUG_MSG("Number of segments: " << number_of_segments);
 
     for (unsigned i = 0; i < number_of_segments; i++) {
-        
+
         // Mount geometry vectors for the current curve segment
         Gx.push_back(inVertices[i+0]->x());  Gy.push_back(inVertices[i+0]->y());
         Gx.push_back(inVertices[i+1]->x());  Gy.push_back(inVertices[i+1]->y());
@@ -345,7 +346,7 @@ bool WindowClipper::coord_inside(double x, double y)
                 m_edge = WindowClipper::Boundary::RIGHT_EDGE;
             }
         } else {
-            m_edge = WindowClipper::Boundary::BOTTOM_EDGE;    
+            m_edge = WindowClipper::Boundary::BOTTOM_EDGE;
         }
     } else {
         m_edge = WindowClipper::Boundary::LEFT_EDGE;
