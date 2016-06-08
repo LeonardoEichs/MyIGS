@@ -211,7 +211,6 @@ void InterfaceController::rotate_window(double angle)
     m_window.rotate(-angle);  // The window and viewport rotate to opposing directions
     this->update_shapes();
 }
-
 /* ============================================================================================= */
 Shape* InterfaceController::find_shape(const std::string &obj)
 /* ============================================================================================= */

@@ -85,10 +85,11 @@ void CreateLineDialog::on_my_response(int response_id) {
             const std::string name = m_nameEntry->get_text().raw();
             sX1 << m_x1Entry->get_text().raw();
             sY1 << m_y1Entry->get_text().raw();
-            sY1 << m_z1Entry->get_text().raw();
+            sZ1 << m_z1Entry->get_text().raw();
             sX2 << m_x2Entry->get_text().raw();
             sY2 << m_y2Entry->get_text().raw();
-            sY2 << m_z2Entry->get_text().raw();
+            sZ2 << m_z2Entry->get_text().raw();
+
 
             if (!name.empty() &&
                     sX1.str().size() != 0 && sY1.str().size() != 0 && sZ1.str().size() != 0
@@ -106,7 +107,6 @@ void CreateLineDialog::on_my_response(int response_id) {
                 builder->add_name(name);
                 builder->add_point(x1, y1, z1);
                 builder->add_point(x2, y2, z2);
-                std::cout << "Added line to ShapeBuilder." << std::endl;
             }
             break;
         }

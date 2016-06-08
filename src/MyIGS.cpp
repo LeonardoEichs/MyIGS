@@ -26,7 +26,9 @@ MyIGS::MyIGS() :
     m_objectsView(Gtk::manage(new ObjectsTreeView())),
     m_canvas(Gtk::manage(new Canvas())),
     m_scaleAdjustment(Gtk::Adjustment::create(1.0, 0.25, 5.0, 0.25)),
-    m_angleEntry(Gtk::manage(new Gtk::Entry())),
+    m_angleEntry_x(Gtk::manage(new Gtk::Entry())),
+    m_angleEntry_y(Gtk::manage(new Gtk::Entry())),
+    m_angleEntry_z(Gtk::manage(new Gtk::Entry())),
     m_csActive(true),
     m_lbActive(false),
     m_nlnActive(false),
@@ -157,26 +159,32 @@ MyIGS::MyIGS() :
     scaleFrame->add(*scaleBox);
 
     // Translation buttons
+    Gtk::Button * const moveForwButton = Gtk::manage(new Gtk::Button("Forw."));
+    Gtk::Button * const moveBackwButton = Gtk::manage(new Gtk::Button("Backw."));
     Gtk::Button * const moveUpButton = Gtk::manage(new Gtk::Button("Up"));
     Gtk::Button * const moveRightButton = Gtk::manage(new Gtk::Button("Right"));
     Gtk::Button * const moveDownButton = Gtk::manage(new Gtk::Button("Down"));
     Gtk::Button * const moveLeftButton = Gtk::manage(new Gtk::Button("Left"));
 
     // Translation buttons signals
+    moveForwButton->signal_clicked().connect(sigc::mem_fun(*this, &MyIGS::move_window_forw));
+    moveBackwButton->signal_clicked().connect(sigc::mem_fun(*this, &MyIGS::move_window_backw));
     moveUpButton->signal_clicked().connect(sigc::mem_fun(*this, &MyIGS::move_window_up));
     moveRightButton->signal_clicked().connect(sigc::mem_fun(*this, &MyIGS::move_window_right));
     moveDownButton->signal_clicked().connect(sigc::mem_fun(*this, &MyIGS::move_window_down));
     moveLeftButton->signal_clicked().connect(sigc::mem_fun(*this, &MyIGS::move_window_left));
 
     Gtk::Grid * const moveGrid = Gtk::manage(new Gtk::Grid());
-    moveGrid->attach(*moveUpButton,2,1,1,1);
-    moveGrid->attach(*moveRightButton,3,2,1,1);
-    moveGrid->attach(*moveDownButton,2,3,1,1);
-    moveGrid->attach(*moveLeftButton,1,2,1,1);
+    moveGrid->attach(*moveForwButton,1,1,1,1);
+    moveGrid->attach(*moveBackwButton,3,1,1,1);
+    moveGrid->attach(*moveUpButton,2,2,1,1);
+    moveGrid->attach(*moveRightButton,3,3,1,1);
+    moveGrid->attach(*moveDownButton,2,4,1,1);
+    moveGrid->attach(*moveLeftButton,1,3,1,1);
     moveGrid->set_row_homogeneous(true);
     moveGrid->set_column_homogeneous(true);
     moveGrid->set_border_width(5);
-    
+
     // Translation frame
     moveFrame->set_shadow_type(Gtk::SHADOW_ETCHED_OUT);
     moveFrame->set_border_width(5);
@@ -184,17 +192,35 @@ MyIGS::MyIGS() :
 
     // Rotation frame
     Gtk::HBox * const rotationBox = Gtk::manage(new Gtk::HBox());
-    Gtk::Label * const angleLabel = Gtk::manage(new Gtk::Label("Angle:"));
+    Gtk::VBox * const entryBox = Gtk::manage(new Gtk::VBox());
+    Gtk::HBox * const xBox = Gtk::manage(new Gtk::HBox());
+    Gtk::HBox * const yBox = Gtk::manage(new Gtk::HBox());
+    Gtk::HBox * const zBox = Gtk::manage(new Gtk::HBox());
+    Gtk::Label * const xLabel = Gtk::manage(new Gtk::Label("x :"));
+    Gtk::Label * const yLabel = Gtk::manage(new Gtk::Label("y :"));
+    Gtk::Label * const zLabel = Gtk::manage(new Gtk::Label("z :"));
     Gtk::Button * const rotationButton = Gtk::manage(new Gtk::Button());
 
-    m_angleEntry->set_width_chars(6);
+    m_angleEntry_x->set_width_chars(8);
+    m_angleEntry_y->set_width_chars(8);
+    m_angleEntry_z->set_width_chars(8);
 
     rotationButton->set_image_from_icon_name("object-rotate-left");
     rotationButton->set_always_show_image();
+    rotationButton->set_size_request(50,-1);
     rotationButton->signal_clicked().connect(sigc::mem_fun(*this, &MyIGS::rotate_window));
 
-    rotationBox->pack_start(*angleLabel, Gtk::PACK_SHRINK, 2);
-    rotationBox->pack_start(*m_angleEntry, Gtk::PACK_SHRINK, 2);
+
+    xBox->pack_start(*xLabel, Gtk::PACK_SHRINK, 2);
+    xBox->pack_start(*m_angleEntry_x, Gtk::PACK_SHRINK, 2);
+    yBox->pack_start(*yLabel, Gtk::PACK_SHRINK, 2);
+    yBox->pack_start(*m_angleEntry_y, Gtk::PACK_SHRINK, 2);
+    zBox->pack_start(*zLabel, Gtk::PACK_SHRINK, 2);
+    zBox->pack_start(*m_angleEntry_z, Gtk::PACK_SHRINK, 2);
+    entryBox->pack_start(*xBox, Gtk::PACK_SHRINK, 2);
+    entryBox->pack_start(*yBox, Gtk::PACK_SHRINK, 2);
+    entryBox->pack_start(*zBox, Gtk::PACK_SHRINK, 2);
+    rotationBox->pack_start(*entryBox, Gtk::PACK_SHRINK, 2);
     rotationBox->pack_start(*rotationButton, Gtk::PACK_SHRINK, 2);
     rotationBox->set_border_width(5);
 
@@ -270,6 +296,26 @@ void MyIGS::on_window_adjustment_value_changed()
 }
 
 /* ============================================================================================= */
+void MyIGS::move_window_forw()
+/* ============================================================================================= */
+{
+  if (m_scaleAdjustment->get_value() < 5) {
+    m_controller->scale_window(m_scaleAdjustment->get_value() + 0.5);
+    m_scaleAdjustment->set_value(m_scaleAdjustment->get_value() + 0.5);
+  }
+}
+
+/* ============================================================================================= */
+void MyIGS::move_window_backw()
+/* ============================================================================================= */
+{
+  if (m_scaleAdjustment->get_value() > 0.5) {
+    m_controller->scale_window(m_scaleAdjustment->get_value() - 0.5);
+    m_scaleAdjustment->set_value(m_scaleAdjustment->get_value() - 0.5);
+  }
+}
+
+/* ============================================================================================= */
 void MyIGS::move_window_up()
 /* ============================================================================================= */
 {
@@ -301,18 +347,21 @@ void MyIGS::move_window_left()
 void MyIGS::rotate_window()
 /* ============================================================================================= */
 {
-    double angle;
-    std::stringstream angle_stream;
-    angle_stream << m_angleEntry->get_text().raw();
+    double angle_x;
+    std::stringstream angle_stream_x;
+    std::stringstream angle_stream_y;
+    std::stringstream angle_stream_z;
+    angle_stream_x << m_angleEntry_x->get_text().raw();
+    angle_stream_y << m_angleEntry_y->get_text().raw();
+    angle_stream_z << m_angleEntry_z->get_text().raw();
 
-    if (angle_stream.str().size() != 0) {
-        angle_stream >> angle;
-        if (angle != 0.0) {
-            m_controller->rotate_window(angle);
+    if (angle_stream_x.str().size() != 0) {
+        angle_stream_x >> angle_x;
+        if (angle_x != 0.0) {
+            m_controller->rotate_window(angle_x);
         }
     }
 }
-
 /* ============================================================================================= */
 void MyIGS::create_point()
 /* ============================================================================================= */

@@ -143,7 +143,7 @@ void WindowClipper::clip_bezier_curve(const DCoordVector &inVertices, DCoordVect
                 if (previous_inside) {
                     // Both current and previous points are inside the clipping window.
                     DEBUG_MSG("  > Previous point was inside.");
-                    new_coord = new Coord<double>(x, y);
+                    new_coord = new Coord<double>(x, y, 0.0);
                     outVertices.push_back(new_coord);
                 } else {
                     // Line is entering the window.
@@ -154,7 +154,7 @@ void WindowClipper::clip_bezier_curve(const DCoordVector &inVertices, DCoordVect
                     outVertices.push_back(new_coord);
                     DEBUG_MSG("  > New intersection at (" << new_coord->x() << ","
                                                           << new_coord->y() << ")");
-                    new_coord = new Coord<double>(x, y);
+                    new_coord = new Coord<double>(x, y, 0.0);
                     outVertices.push_back(new_coord);
                     previous_inside = true;
                 }
@@ -280,7 +280,7 @@ void WindowClipper::forward_diff(unsigned n, const DVector &Dx, const DVector &D
             }
             if (previous_inside) {
                 // Both current and previous points are inside the clipping window.
-                new_coord = new Coord<double>(x, y);
+                new_coord = new Coord<double>(x, y, 0.0);
                 outVertices.push_back(new_coord);
                 DEBUG_MSG("  > Current point is inside.");
                 DEBUG_MSG("  > Previous point was inside.");
@@ -290,7 +290,7 @@ void WindowClipper::forward_diff(unsigned n, const DVector &Dx, const DVector &D
                 current.set_y(y);
                 new_coord = WindowClipper::SH_intersect(&current, &previous);
                 outVertices.push_back(new_coord);
-                new_coord = new Coord<double>(x, y);
+                new_coord = new Coord<double>(x, y, 0.0);
                 outVertices.push_back(new_coord);
                 previous_inside = true;
                 DEBUG_MSG("  > Current point is inside.");
@@ -425,8 +425,8 @@ void WindowClipper::cohen_sutherland_clipping(Line &line)
     }
 
     DCoordVector newVertices;
-    newVertices.push_back(new Coord<double>(x1, y1));
-    newVertices.push_back(new Coord<double>(x2, y2));
+    newVertices.push_back(new Coord<double>(x1, y1, 0.0));
+    newVertices.push_back(new Coord<double>(x2, y2, 0.0));
     line.update_normalized_coords(newVertices);
 }
 
@@ -506,8 +506,8 @@ void WindowClipper::liang_barsky_clipping(Line &line)
     DEBUG_MSG("Y2: " << y2);
 
     DCoordVector newVertices;
-    newVertices.push_back(new Coord<double>(x1, y1));
-    newVertices.push_back(new Coord<double>(x2, y2));
+    newVertices.push_back(new Coord<double>(x1, y1, 0.0));
+    newVertices.push_back(new Coord<double>(x2, y2, 0.0));
     line.update_normalized_coords(newVertices);
 }
 
@@ -666,7 +666,7 @@ Coord<double>* WindowClipper::SH_intersect(Coord<double> *p, Coord<double> *s)
             break;
         }
     }
-    return new Coord<double>(x, y);
+    return new Coord<double>(x, y, 0.0);
 }
 
 /* ============================================================================================= */
